@@ -25,7 +25,7 @@ public interface Controller {
 
     /**
      * Basically the same asynchronous API, but uses a lambda instead of the
-     * inner class.
+     * inner class in the implementation.
      * 
      * @param t
      *            a request object
