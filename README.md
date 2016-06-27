@@ -66,7 +66,9 @@ The *Dispatcher* class is meant to represent a caller of an API - the kind of th
 This is even more compact. We've shortcut the whole lambda construct, and just passed a reference to the *println* method. We can do this because *println* conforms to the *Consumer* interface, so the compiler can infer the parameter correctly and call it. In fact, *System.out::println* is semantically exactly the same as:
 
 ```java
-    (s) -> System.out.println(s);
+    (s) -> {
+        System.out.println(s);
+    }
 ```
   
 ###Controller###
