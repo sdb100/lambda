@@ -12,7 +12,7 @@ public class Dispatcher {
 
     public void makeCalls() {
 
-        Controller controller = new Controller();
+        Controller controller = new ControllerImpl();
         final Dispatcher that = this;
 
         // This does a synchronous call to the Controller
