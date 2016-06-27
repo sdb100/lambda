@@ -31,7 +31,7 @@ public class Dispatcher {
         });
         System.out.println("Submitted: " + t2);
 
-        // Simplified with a lambda - note change in scope of this
+        // Simplified with a lambda - note change in scope of "this"
         Request t3 = new Request("Java 8 lambda");
         controller.doAsyncThing(t3, (Result r) -> {
             this.output(r);
