@@ -59,7 +59,7 @@ The *Dispatcher* class is meant to represent a caller of an API - the kind of th
   
   In fact, the next call simplifies things even further, because the compiler doesn't need you to specify *Result* - it can work this out as well.
   
-  The last call uses a method reference:
+  The last call uses a [method reference](https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html):
   
 ```java
     controller.doAsyncThingJ8Style(t5, System.out::println);
