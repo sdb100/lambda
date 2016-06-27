@@ -11,79 +11,89 @@ import java.util.function.Consumer;
  */
 public class ControllerImpl implements Controller {
 
-	private ExecutorService es = Executors.newFixedThreadPool(4);
+    private ExecutorService es = Executors.newFixedThreadPool(4);
 
-	/* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see lambdas.Controller#doSyncThing(lambdas.Request)
      */
-	@Override
+    @Override
     public Result doSyncThing(Request t) {
-		return new Result(t);
-	}
+        return new Result(t);
+    }
 
-	/* (non-Javadoc)
-     * @see lambdas.Controller#doAsyncThing(lambdas.Request, java.util.function.Consumer)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see lambdas.Controller#doAsyncThing(lambdas.Request,
+     * java.util.function.Consumer)
      */
-	@Override
+    @Override
     public void doAsyncThing(Request t, Consumer<Result> callback) {
-		this.es.execute(new Processor(t, callback));
-	}
+        this.es.execute(new Processor(t, callback));
+    }
 
-	/* (non-Javadoc)
-     * @see lambdas.Controller#doAsyncThingJ8Style(lambdas.Request, java.util.function.Consumer)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see lambdas.Controller#doAsyncThingJ8Style(lambdas.Request,
+     * java.util.function.Consumer)
      */
-	@Override
+    @Override
     public void doAsyncThingJ8Style(Request t, Consumer<Result> callback) {
-		this.es.execute(() -> {
-			try {
-				// Add a delay on this thread
-				Thread.sleep(1000, 0);
-			} catch (InterruptedException e) {
-				System.out.println(e);
-			}
-			callback.accept(new Result(t));
-		});
-	}
+        this.es.execute(() -> {
+            try {
+                // Add a delay on this thread
+                Thread.sleep(1000, 0);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+            callback.accept(new Result(t));
+        });
+    }
 
-	/* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see lambdas.Controller#finish()
      */
-	@Override
+    @Override
     public void finish() {
-		this.es.shutdown();
-		try {
-			if (!this.es.awaitTermination(5, TimeUnit.SECONDS)) {
-				System.out.println("Shutdown timed out");
-			}
-		} catch (InterruptedException e) {
-			System.out.println(e);
-		}
-	}
+        this.es.shutdown();
+        try {
+            if (!this.es.awaitTermination(5, TimeUnit.SECONDS)) {
+                System.out.println("Shutdown timed out");
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
 
-	/**
-	 * A simple wrapper to package the request and its callback in a runnable
-	 * for future execution.
-	 */
-	private class Processor implements Runnable {
+    /**
+     * A simple wrapper to package the request and its callback in a runnable
+     * for future execution.
+     */
+    private class Processor implements Runnable {
 
-		private Request r = null;
-		private Consumer<Result> c = null;
+        private Request r = null;
+        private Consumer<Result> c = null;
 
-		public Processor(Request t, Consumer<Result> callback) {
-			this.r = t;
-			this.c = callback;
-		}
+        public Processor(Request t, Consumer<Result> callback) {
+            this.r = t;
+            this.c = callback;
+        }
 
-		@Override
-		public void run() {
-			try {
-				// Add a delay on this thread
-				Thread.sleep(1000, 0);
-			} catch (InterruptedException e) {
-				System.out.println(e);
-			}
-			this.c.accept(new Result(this.r));
-		}
+        @Override
+        public void run() {
+            try {
+                // Add a delay on this thread
+                Thread.sleep(1000, 0);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+            this.c.accept(new Result(this.r));
+        }
 
-	}
+    }
 }
