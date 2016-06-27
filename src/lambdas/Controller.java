@@ -35,7 +35,7 @@ public interface Controller {
     void doAsyncThingJ8Style(Request t, Consumer<Result> callback);
 
     /**
-     * Gracefully close down the executor.
+     * Gracefully shut things down.
      */
     void finish();
 
