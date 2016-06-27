@@ -1,18 +1,18 @@
 package lambdas;
 
 public class Request {
-	private String value = "default";
-	
-	public Request(String s){
-		this.value = s;
-	}
+    private String value = "default";
 
-	public String getValue() {
-		return value;
-	}
+    public Request(String s) {
+        this.value = s;
+    }
 
-	@Override
-	public String toString(){
-		return this.getValue();
-	}
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return this.getValue();
+    }
 }
